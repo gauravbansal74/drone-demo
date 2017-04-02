@@ -1,3 +1,7 @@
-image: nginx
+image: r.clrhs.dk/drone-builder
 script:
-  - echo hello world
+  - psql -c 'create database app_test;' -U postgres
+  - bundle exec rake ar:migrate --trace
+  - bundle install --without development --path vendor/bundle
+services:
+  - postgres
